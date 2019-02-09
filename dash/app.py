@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+import pandas as pd
+
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import pandas as pd
+from dash.dependencies import Input, Output
 
 df = pd.read_csv('cycle-hires-prepared.csv', index_col=0, parse_dates=True)
 df_d = df.groupby(df.index.dayofweek).mean()
@@ -27,7 +29,8 @@ app.layout = html.Div(children=[
                     {'x': df.index, 'y': df['Number of Bicycle Hires']},
                 ],
                 'layout': {
-                    'title': 'Bicycle hires over time'
+                    'title': 'Bicycle hires over time',
+                    'yaxis': {'fixedrange': True}
                 }
             }
         )
@@ -43,10 +46,11 @@ app.layout = html.Div(children=[
                          'type': 'histogram'},
                     ],
                     'layout': {
-                        'title': 'Number of daily bicycle hires histogram'
+                        'title': 'Daily bicycle hires histogram',
+                        'yaxis': {'title': 'Count'}
                     }
                 }
-            ), style={'width': '33%', 'display': 'inline-block'}
+            ), className='four columns'
         ),
         html.Div(
             dcc.Graph(
@@ -57,10 +61,14 @@ app.layout = html.Div(children=[
                          'type': 'bar'},
                     ],
                     'layout': {
-                        'title': 'Daily bicycle hires by day of week'
+                        'title': 'Daily bicycle hires by day of week',
+                        'xaxis': {'ticktext': ['Sun', 'Mon', 'Tue', 'Wed',
+                                               'Thu', 'Fri', 'Sat'],
+                                  'tickvals': [0, 1, 2, 3, 4, 5, 6]},
+                        'yaxis': {'title': 'Count'}
                     }
                 }
-            ), style={'width': '33%', 'display': 'inline-block'}
+            ), className='four columns'
         ),
         html.Div(
             dcc.Graph(
@@ -71,10 +79,16 @@ app.layout = html.Div(children=[
                          'type': 'bar'},
                     ],
                     'layout': {
-                        'title': 'Daily bicycle hires by month'
+                        'title': 'Daily bicycle hires by month',
+                        'xaxis': {'ticktext': ['Jan', 'Feb', 'Mar', 'Apr',
+                                               'May', 'Jun', 'Jul', 'Aug',
+                                               'Sep', 'Oct', 'Nov', 'Dec'],
+                                  'tickvals': [1, 2, 3, 4, 5, 6, 7,
+                                               8, 9, 10, 11, 12]},
+                        'yaxis': {'title': 'Count'}
                     }
                 }
-            ), style={'width': '33%', 'display': 'inline-block'}
+            ), className='four columns'
         )
     ])
 ])
