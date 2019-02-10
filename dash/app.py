@@ -13,32 +13,82 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-app.layout = html.Div(children=[
-    html.H1(children='London Bicycle Hires', style={'textAlign': 'center'}),
+colors = {
+    'text': '#E9E6FF',
+    'text2': '#B0A084',
+    'background': '#13262F',
+    'background2': '#583E23',
+    'background3': '#73683B'
+}
 
-    html.Div(children='''
+app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
+    html.H1(
+        children='London Bicycle Hires',
+        style={
+            'textAlign': 'center',
+            'color': colors['text']
+        }
+    ),
+
+    html.Div(
+        children='''
         Over seven years' worth of London daily bicycle hire data.
-    ''', style={'textAlign': 'center'}),
+    ''',
+        style={
+            'textAlign': 'center',
+            'color': colors['text'],
+            'backgroundColor': colors['background2']
+        }
+    ),
 
     html.Div(
         dcc.Graph(
             id='timeseries-graph',
             figure={
                 'data': [
-                    {'x': df.index, 'y': df['Number of Bicycle Hires']},
+                    {
+                        'x': df.index,
+                        'y': df['Number of Bicycle Hires'],
+                        'marker': {
+                            'color': colors['background2']
+                        }
+                    },
                 ],
                 'layout': {
                     'title': 'Bicycle hires over time',
-                    'yaxis': {'fixedrange': True}
+                    'yaxis': {'fixedrange': True},
+                    'plot_bgcolor': colors['text'],
+                    'paper_bgcolor': colors['background'],
+                    'font': {
+                        'color': colors['text']
+                    }
                 }
             }
         )
     ),
 
     html.Div(children=[
-        html.Div(dcc.Graph(id='histogram-graph'), className='four columns'),
-        html.Div(dcc.Graph(id='day-graph'), className='four columns'),
-        html.Div(dcc.Graph(id='month-graph'), className='four columns')
+        html.Div(dcc.Graph(
+            id='histogram-graph'),
+            style={
+                'display': 'inline-block',
+                'width': '33.33%'
+            }
+        ),
+        html.Div(dcc.Graph(
+            id='day-graph'),
+            style={
+                'display': 'inline-block',
+                'width': '33.33%'
+            }
+        ),
+        html.Div(dcc.Graph(
+            id='month-graph'),
+            style={
+                'display': 'inline-block',
+                'width': '33.33%'
+            }
+        ),
     ])
 ])
 
@@ -57,11 +107,22 @@ def update_histogram(ts_selection):
         xaxis = df['Number of Bicycle Hires']
     return {
         'data': [
-            {'x': xaxis, 'type': 'histogram'},
+            {
+                'x': xaxis,
+                'type': 'histogram',
+                'marker': {
+                    'color': colors['background2']
+                }
+            },
         ],
         'layout': {
             'title': 'Daily bicycle hires histogram',
-            'yaxis': {'title': 'Count'}
+            'yaxis': {'title': 'Count'},
+            'plot_bgcolor': colors['text'],
+            'paper_bgcolor': colors['background'],
+            'font': {
+                'color': colors['text']
+            }
         }
     }
 
@@ -80,14 +141,27 @@ def update_day_graph(selection):
         df_d = df.groupby(df.index.dayofweek).mean()
     return {
         'data': [
-            {'x': df_d.index, 'y': df_d['Number of Bicycle Hires'],
-             'type': 'bar'},
+            {
+                'x': df_d.index,
+                'y': df_d['Number of Bicycle Hires'],
+                'type': 'bar',
+                'marker': {
+                    'color': colors['background2']
+                }
+            },
         ],
         'layout': {
             'title': 'Daily bicycle hires by day of week',
-            'xaxis': {'ticktext': ['Sun', 'Mon', 'Tue', 'Wed',
-                                   'Thu', 'Fri', 'Sat'],
-                      'tickvals': [0, 1, 2, 3, 4, 5, 6]}
+            'xaxis': {
+                'ticktext': ['Sun', 'Mon', 'Tue', 'Wed',
+                             'Thu', 'Fri', 'Sat'],
+                'tickvals': [0, 1, 2, 3, 4, 5, 6]
+            },
+            'plot_bgcolor': colors['text'],
+            'paper_bgcolor': colors['background'],
+            'font': {
+                'color': colors['text']
+            }
         }
     }
 
@@ -106,16 +180,29 @@ def update_month_graph(selection):
         df_m = df.groupby(df.index.month).mean()
     return {
         'data': [
-            {'x': df_m.index, 'y': df_m['Number of Bicycle Hires'],
-             'type': 'bar'},
+            {
+                'x': df_m.index,
+                'y': df_m['Number of Bicycle Hires'],
+                'type': 'bar',
+                'marker': {
+                    'color': colors['background2']
+                }
+            },
         ],
         'layout': {
             'title': 'Daily bicycle hires by month',
-            'xaxis': {'ticktext': ['Jan', 'Feb', 'Mar', 'Apr',
-                                   'May', 'Jun', 'Jul', 'Aug',
-                                   'Sep', 'Oct', 'Nov', 'Dec'],
-                      'tickvals': [1, 2, 3, 4, 5, 6, 7,
-                                   8, 9, 10, 11, 12]}
+            'xaxis': {
+                'ticktext': ['Jan', 'Feb', 'Mar', 'Apr',
+                             'May', 'Jun', 'Jul', 'Aug',
+                             'Sep', 'Oct', 'Nov', 'Dec'],
+                'tickvals': [1, 2, 3, 4, 5, 6, 7,
+                             8, 9, 10, 11, 12]
+            },
+            'plot_bgcolor': colors['text'],
+            'paper_bgcolor': colors['background'],
+            'font': {
+                'color': colors['text']
+            }
         }
     }
 
