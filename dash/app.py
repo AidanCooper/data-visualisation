@@ -116,7 +116,7 @@ def update_histogram(ts_selection):
             },
         ],
         'layout': {
-            'title': 'Daily bicycle hires histogram',
+            'title': 'Hires histogram',
             'yaxis': {'title': 'Count'},
             'plot_bgcolor': colors['text'],
             'paper_bgcolor': colors['background'],
@@ -151,7 +151,7 @@ def update_day_graph(selection):
             },
         ],
         'layout': {
-            'title': 'Daily bicycle hires by day of week',
+            'title': 'Hires by day of week',
             'xaxis': {
                 'ticktext': ['Sun', 'Mon', 'Tue', 'Wed',
                              'Thu', 'Fri', 'Sat'],
@@ -190,7 +190,7 @@ def update_month_graph(selection):
             },
         ],
         'layout': {
-            'title': 'Daily bicycle hires by month',
+            'title': 'Hires by month',
             'xaxis': {
                 'ticktext': ['Jan', 'Feb', 'Mar', 'Apr',
                              'May', 'Jun', 'Jul', 'Aug',
