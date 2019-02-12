@@ -6,7 +6,7 @@ A collection of data visualisation projects created using a variety of framework
 <img src="dash/images/dash_bicycle_hire.gif"/>
 
 ## [Top 1000 Global Companies in Altair](top-profit-revenue/)
-<img src="tpr_altair.png"/>
+<img src="top-profit-revenue/tpr_altair.png"/>
 
 ## [Tour de France Doping in Matplotlib/Seaborn](tour-de-france)
 <img src="tour-de-france/tdf.png"/>
